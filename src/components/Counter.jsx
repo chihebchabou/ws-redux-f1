@@ -1,35 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   increment,
   decrement,
   incrementByTen,
 } from '../redux/actions/counterActions';
 
-const Counter = ({ counter, inc, dec, incByTen }) => {
+const Counter = () => {
+  const counter = useSelector(state => state.counterReducer.counter);
+  const dispatch = useDispatch();
   // console.log(props);
   return (
     <div>
-      <button onClick={() => inc()}>+</button>
+      <button onClick={() => dispatch(increment())}>+</button>
       {counter}
-      <button onClick={() => dec()}>-</button>
-      <button onClick={() => incByTen()}>+10</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <button onClick={() => dispatch(incrementByTen())}>+10</button>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    counter: state.counterReducer.counter,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    inc: () => dispatch(increment()),
-    dec: () => dispatch(decrement()),
-    incByTen: () => dispatch(incrementByTen()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default Counter;
