@@ -4,25 +4,36 @@ import {
   incrementByTen,
   incrementAsync,
 } from '../redux/actions/counterActions';
-import { connect } from 'react-redux';
 
-const Counter = ({ counter, loading, inc, dec, incByTen, incAsync }) => {
+import { useSelector, useDispatch } from 'react-redux';
+
+const Counter = () => {
+  const counter = useSelector(state => state.counterReducer.counter);
+  const loading = useSelector(state => state.counterReducer.loading);
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="mb-3">
         <span>{loading === true ? 'Please wait...' : counter}</span>
       </div>
       <div className="flex justify-content-around">
-        <button className="width-100" onClick={() => inc()}>
+        <button className="width-100" onClick={() => dispatch(increment())}>
           +
         </button>
-        <button className="width-100" onClick={() => dec()}>
+        <button className="width-100" onClick={() => dispatch(decrement())}>
           -
         </button>
-        <button className="width-100" onClick={() => incByTen()}>
+        <button
+          className="width-100"
+          onClick={() => dispatch(incrementByTen())}
+        >
           +10
         </button>
-        <button className="width-100" onClick={() => incAsync()}>
+        <button
+          className="width-100"
+          onClick={() => dispatch(incrementAsync())}
+        >
           + Async
         </button>
       </div>
@@ -30,20 +41,4 @@ const Counter = ({ counter, loading, inc, dec, incByTen, incAsync }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    counter: state.counterReducer.counter,
-    loading: state.counterReducer.loading,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    inc: () => dispatch(increment()),
-    dec: () => dispatch(decrement()),
-    incByTen: () => dispatch(incrementByTen()),
-    incAsync: () => dispatch(incrementAsync()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default Counter;
