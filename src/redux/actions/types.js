@@ -1,0 +1,5 @@
+export const INCREMENT = 'INCREMENT';
+export const INCREMENTBYTEN = 'INCREMENTBYTEN';
+export const DECREMENT = 'DECREMENT';
+export const INCREMENTASYNC = 'INCREMENTASYNC';
+export const ISLOADING = 'ISLOADING';
